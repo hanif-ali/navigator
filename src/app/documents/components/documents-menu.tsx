@@ -1,10 +1,10 @@
-import { PlusIcon } from "@radix-ui/react-icons";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Button } from "~/components/ui/button";
 import { prisma } from "~/prisma";
+import { IconPlus } from "@tabler/icons-react";
+import { DocumentNavItem } from "./document-nav-item";
 
-export default async function DocumentsMenu() {
+export async function DocumentsMenu() {
   const documents = await prisma.document.findMany();
 
   const createNewDocument = async () => {
@@ -19,34 +19,27 @@ export default async function DocumentsMenu() {
   };
 
   return (
-    <div className="min-w-[200px] border-r bg-black pt-4">
-      <div className="flex flex-col gap-2">
-        <div className="flex-1">
-          <nav className="grid items-start px-4 text-sm font-medium text-white">
-            <div className="flex flex-row items-center font-semibold text-white">
-              <div className="flex-1">Documents</div>
-              <form action={createNewDocument}>
-                <Button
-                  className="rounded-full text-white"
-                  size="icon"
-                  variant="ghost"
-                >
-                  <PlusIcon />
-                  <span className="sr-only">New Note</span>
-                </Button>
-              </form>
-            </div>
-            {documents.map((document) => (
-              <Link
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-white hover:text-gray-300"
-                href={`/documents/${document.id}/`}
-              >
-                {document.name}
-              </Link>
-            ))}
-          </nav>
-        </div>
+    <div className="flex w-[220px] flex-col gap-2 border-r pt-4 text-sm font-semibold">
+      <div className="flex items-center justify-between px-3">
+        {/* <nav className="grid items-start px-4 text-sm font-medium text-white">
+          <div className="flex flex-row items-center font-semibold text-white"> */}
+        <div>Documents</div>
+        <form action={createNewDocument}>
+          <Button
+            className="rounded-full p-2 text-white"
+            size="icon"
+            variant="ghost"
+          >
+            <IconPlus />
+            <span className="sr-only">New Document</span>
+          </Button>
+        </form>
       </div>
+      {documents.map((document) => (
+        <DocumentNavItem document={document} />
+      ))}
+      {/* </nav>
+      </div> */}
     </div>
   );
 }

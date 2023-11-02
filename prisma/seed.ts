@@ -4,7 +4,10 @@ const prisma = new PrismaClient();
 
 async function main() {
   await prisma.document.upsert({
-    where: { id: "61d6fb8a-b658-4313-96f9-608d3b3a0ae9", name: "Sample Document 1" },
+    where: {
+      id: "61d6fb8a-b658-4313-96f9-608d3b3a0ae9",
+      name: "Sample Document 1",
+    },
     update: {},
     create: {
       id: "61d6fb8a-b658-4313-96f9-608d3b3a0ae9",
@@ -13,7 +16,10 @@ async function main() {
     },
   });
   await prisma.document.upsert({
-    where: { id: "62d6fb8a-b658-4313-96f9-608d3b3a0ae9", name: "Sample Document 1" },
+    where: {
+      id: "62d6fb8a-b658-4313-96f9-608d3b3a0ae9",
+      name: "Sample Document 1",
+    },
     update: {},
     create: {
       id: "62d6fb8a-b658-4313-96f9-608d3b3a0ae9",

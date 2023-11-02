@@ -33,8 +33,8 @@ export default function RootLayout({
         >
           <TRPCReactProvider headers={headers()}>
             <NavBar />
-            <div className="flex pt-10 min-h-screen">
-              <div className="flex flex-col items-center border-r bg-black w-[60px]">
+            <div className="flex min-h-screen pt-10">
+              <div className="flex w-[60px] flex-col items-center border-r">
                 <TopMenu />
               </div>
               <div className="flex-1">{children}</div>
