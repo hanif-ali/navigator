@@ -1,11 +1,14 @@
+import Link from "next/link";
 import { prisma } from "~/prisma";
 
 export async function SideBar() {
-  const navigatorDocuments = await prisma.navigatorDocument.findMany();
+  const documents = await prisma.document.findMany();
   return (
-    <nav className="w-56 flex-none border-r px-2 pt-10">
-      {navigatorDocuments.map((ng) => (
-        <div>{ng.name}</div>
+    <nav className="w-56 flex-none border-r px-2 pt-10 min-h-screen">
+      {documents.map((doc) => (
+        <div>
+          <Link href={`/documents/${doc.id}`}>{doc.name}</Link>
+        </div>
       ))}
     </nav>
   );

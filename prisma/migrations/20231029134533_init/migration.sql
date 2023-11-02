@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE "NavigatorDocument" (
+CREATE TABLE "Document" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "name" TEXT NOT NULL,
     "content" TEXT NOT NULL,
