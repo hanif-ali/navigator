@@ -1,16 +1,16 @@
 import Link from "next/link";
-import { IconNotes, IconUsersGroup, IconSettings } from "@tabler/icons-react";
+import { IconNotes, IconSettings, IconTopologyStar3 } from "@tabler/icons-react";
 
 export function TopMenu() {
   return (
     <>
       <Link className="my-4 text-white" href="/documents/">
         <IconNotes />
-        <span className="sr-only">Notes</span>
+        <span className="sr-only">Documents</span>
       </Link>
       <Link className="my-4 text-white" href="#">
-        <IconUsersGroup />
-        <span className="sr-only">Community</span>
+        <IconTopologyStar3 />
+        <span className="sr-only">Data Sources</span>
       </Link>
       <Link className="my-4 text-white" href="#">
         <IconSettings />

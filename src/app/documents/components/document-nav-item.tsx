@@ -6,6 +6,7 @@ import { IconTrash } from "@tabler/icons-react";
 import { prisma } from "~/prisma";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { IconSelector } from "~/components/documents/icon-selector";
 
 export function DocumentNavItem(props: { document: Document }) {
   const { document } = props;
@@ -15,28 +16,38 @@ export function DocumentNavItem(props: { document: Document }) {
     await prisma.document.delete({
       where: { id },
     });
-    if (document.id === id){
-      redirect("/documents")
+    if (document.id === id) {
+      redirect("/documents");
     }
     revalidatePath("/documents");
   };
 
   return (
-    <div className="hover:bg-dark-100 flex h-8 items-center px-3 pl-6 leading-10">
-      <div
-        className="group flex w-full items-center justify-between rounded-lg "
+    <div
+      className="group relative flex h-6 cursor-default select-none items-center justify-between rounded-sm px-2 py-1 pl-5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+      cmdk-item=""
+      role="option"
+      data-value="calendar"
+    >
+      <Link
+        className="w-[80%] overflow-hidden overflow-ellipsis whitespace-nowrap"
+        href={`/documents/${document.id}/`}
       >
-        <Link className="m-w-[80%]" href={`/documents/${document.id}/`}>{document.name}</Link>
-        
-        <form
-          className="hidden w-[20%] group-hover:inline-flex"
-          action={deleteDocument.bind(null, document.id)}
+        <span className="mr-2">{document.icon}</span>{document.name}
+      </Link>
+      <form
+        className="hidden w-[20%] group-hover:inline-flex"
+        action={deleteDocument.bind(null, document.id)}
+      >
+        <Button
+          size="icon"
+          className="h-6 w-6"
+          variant="destructive"
+          type="submit"
         >
-          <Button size="icon" variant="destructive" type="submit">
-            <IconTrash />
-          </Button>
-        </form>
-      </div>
+          <IconTrash className="h-4 w-4" />
+        </Button>
+      </form>
     </div>
   );
 }
