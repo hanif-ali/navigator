@@ -23,7 +23,6 @@ export default function Editor(props: Props) {
         data,
         async onChange(api, event) {
           const data = await api.saver.save();
-					console.log(data)
           onChange(data);
         },
         defaultBlock: 'paragraph',

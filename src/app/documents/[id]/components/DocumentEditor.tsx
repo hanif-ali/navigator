@@ -3,7 +3,6 @@ import { useDebouncedCallback } from "use-debounce";
 
 import { Document } from "@prisma/client";
 import dynamic from "next/dynamic";
-import { OutputData } from "@editorjs/editorjs";
 import { api } from "~/trpc/react";
 import { Separator } from "~/components/ui/separator";
 import { EditableInput } from "~/components/editor/editable-input";
@@ -18,43 +17,26 @@ const Editor = dynamic(() => import("~/components/editor/editor"), {
 export function DocumentEditor(props: { document: Document }) {
   const [document, setDocument] = useState(props.document);
 
-  const { mutate } = api.document.update.useMutation({
-    onMutate: (data) => {
-      setDocument((docBefore) => ({
-        id: docBefore.id,
-        name: data.name ?? docBefore.name,
-        icon: data.icon ?? docBefore.icon,
-        content: data.content ?? docBefore.content,
-        createdAt: docBefore.createdAt,
-        updatedAt: docBefore.updatedAt,
-      }));
-    },
-  });
+  const { mutate } = api.document.update.useMutation();
 
   const updateTitleDebounced = useDebouncedCallback((newTitle) => {
     mutate({ id: document.id, name: newTitle });
   }, 1000);
 
-  const handleContentChange = (data: OutputData) => {
+  const handleContentChange = (data: any) => {
     mutate({
       id: document.id,
-      content: JSON.stringify(data),
+      content: data,
     });
   };
 
   const handleIconChange = (emoji: Emoji) => {
+    setDocument((doc) => ({ ...doc, icon: emoji.emoji }));
     mutate({
       id: document.id,
       icon: emoji.emoji,
     });
   };
-
-  let documentContent: any = document.content;
-  try {
-    documentContent = JSON.parse(documentContent);
-  } catch {
-    documentContent = undefined;
-  }
 
   return (
     <div>
@@ -68,7 +50,7 @@ export function DocumentEditor(props: { document: Document }) {
       </div>
       <Separator className="my-2 text-2xl" />
       <div className="px-2">
-        <Editor onChange={handleContentChange} data={documentContent} />
+        <Editor onChange={handleContentChange} data={document.content as any} />
       </div>
     </div>
   );

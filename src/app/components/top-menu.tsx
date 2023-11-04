@@ -8,7 +8,7 @@ export function TopMenu() {
         <IconNotes />
         <span className="sr-only">Documents</span>
       </Link>
-      <Link className="my-4 text-white" href="#">
+      <Link className="my-4 text-white" href="/data-sources/">
         <IconTopologyStar3 />
         <span className="sr-only">Data Sources</span>
       </Link>

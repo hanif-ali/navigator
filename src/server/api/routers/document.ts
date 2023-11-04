@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { OutputData as EditorJSOutputData } from "@editorjs/editorjs";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
@@ -8,7 +9,7 @@ export const documentRouter = createTRPCRouter({
       z.object({
         id: z.string(),
         name: z.string().optional(),
-        content: z.string().optional(),
+        content: z.record(z.any()).optional(),
         icon: z.string().optional(),
       }),
     )

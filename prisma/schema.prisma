@@ -6,15 +6,40 @@ generator client {
 }
 
 datasource db {
-    provider = "sqlite"
+    provider = "postgres"
     url      = env("DATABASE_URL")
 }
 
 model Document {
     id        String   @id @default(uuid())
     name      String
-    content   String
+    content   Json
     icon      String   @default("📄")
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+}
+
+enum DataSourceType {
+    POSTGRES
+}
+
+model DataSource {
+    id          String         @id @default(uuid())
+    name        String
+    description String
+    type        DataSourceType
+
+    postgresConfig   PostgresConfiguration? @relation(fields: [postgresConfigId], references: [id])
+    postgresConfigId String?                @unique
+}
+
+model PostgresConfiguration {
+    id       String @id @default(uuid())
+    host     String
+    port     Int
+    database String
+    user     String
+    password String
+
+    dataSource DataSource?
 }
