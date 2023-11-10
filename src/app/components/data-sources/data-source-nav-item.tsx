@@ -1,25 +1,24 @@
-import { Document } from "@prisma/client";
+import { DataSource, Document } from "@prisma/client";
 import Link from "next/link";
-import { Button } from "~/components/ui/button";
+import { Button } from "~/app/components/ui/button";
 
 import { IconTrash } from "@tabler/icons-react";
 import { prisma } from "~/prisma";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { IconSelector } from "~/components/documents/icon-selector";
 
-export function DocumentNavItem(props: { document: Document }) {
-  const { document } = props;
+export function DataSourceNavItem(props: { dataSource: DataSource }) {
+  const { dataSource } = props;
 
-  const deleteDocument = async (id: string) => {
+  const deleteDataSource = async (id: string) => {
     "use server";
-    await prisma.document.delete({
+    await prisma.dataSource.delete({
       where: { id },
     });
-    if (document.id === id) {
-      redirect("/documents");
+    if (dataSource.id === id) {
+      redirect("/data-sources");
     }
-    revalidatePath("/documents");
+    revalidatePath("/data-sources");
   };
 
   return (
@@ -31,13 +30,13 @@ export function DocumentNavItem(props: { document: Document }) {
     >
       <Link
         className="w-[80%] overflow-hidden overflow-ellipsis whitespace-nowrap"
-        href={`/documents/${document.id}/`}
+        href={`/data-sources/${dataSource.id}/`}
       >
-        <span className="mr-2">{document.icon}</span>{document.name}
+        {dataSource.name}
       </Link>
       <form
         className="hidden w-[20%] group-hover:inline-flex"
-        action={deleteDocument.bind(null, document.id)}
+        action={deleteDataSource.bind(null, dataSource.id)}
       >
         <Button
           size="icon"

@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { Button } from "~/components/ui/button";
+import { Button } from "~/app/components/ui/button";
 import { prisma } from "~/prisma";
 import { IconPlus } from "@tabler/icons-react";
 import { DocumentNavItem } from "./document-nav-item";

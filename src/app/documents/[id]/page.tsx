@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { prisma } from "~/prisma";
-import { DocumentEditor } from "./components/DocumentEditor";
+import { DocumentEditor } from "../../components/documents/document-editor";
 
 export default async function DocumentPage({
   params,

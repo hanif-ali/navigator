@@ -37,6 +37,16 @@ const config = {
 
     return config;
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "static-00.iconduck.com",
+        port: "",
+        pathname: "**",
+      },
+    ],
+  },
 };
 
 export default config;

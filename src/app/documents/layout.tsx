@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ReactNode } from "react";
-import { DocumentsMenu } from "./components/documents-menu";
+import { DocumentsMenu } from "../components/documents/documents-menu";
 
 export default function DocumentsPageLayout({
   children,

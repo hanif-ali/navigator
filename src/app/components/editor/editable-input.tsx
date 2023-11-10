@@ -1,3 +1,5 @@
+"use client";
+
 import { ChangeEventHandler, useState } from "react";
 import { Input } from "../ui/input";
 import { twMerge } from "tailwind-merge";

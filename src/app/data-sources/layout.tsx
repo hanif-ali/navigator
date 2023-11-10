@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ReactNode } from "react";
-import { DataSourcesMenu } from "./components/data-sources-menu";
+import { DataSourcesMenu } from "../components/data-sources/data-sources-menu";
 
 export default function DocumentsPageLayout({
   children,

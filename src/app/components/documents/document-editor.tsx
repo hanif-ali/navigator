@@ -4,13 +4,13 @@ import { useDebouncedCallback } from "use-debounce";
 import { Document } from "@prisma/client";
 import dynamic from "next/dynamic";
 import { api } from "~/trpc/react";
-import { Separator } from "~/components/ui/separator";
-import { EditableInput } from "~/components/editor/editable-input";
-import { IconSelector } from "~/components/documents/icon-selector";
+import { Separator } from "~/app/components/ui/separator";
+import { EditableInput } from "~/app/components/editor/editable-input";
+import { IconSelector } from "~/app/components/documents/icon-selector";
 import { Emoji } from "~/utils/emojis";
 import { useState } from "react";
 
-const Editor = dynamic(() => import("~/components/editor/editor"), {
+const Editor = dynamic(() => import("~/app/components/editor/editor"), {
   ssr: false,
 });
 
