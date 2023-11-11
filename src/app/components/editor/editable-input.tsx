@@ -18,12 +18,22 @@ type Props = DefaultProps & {
 export function EditableInput(props: Props) {
   const [value, setValue] = useState(props.value);
 
-	const className = twMerge("outline-none focus-visible:ring-0 px-0 py-0 border-0 bg-transparent", props.className)
+  const className = twMerge(
+    "outline-none focus-visible:ring-0 px-0 py-0 border-0 bg-transparent",
+    props.className,
+  );
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setValue(e.target.value);
     props.onChange?.(e.target.value);
   };
 
-  return <Input {...props} className={className} onChange={handleChange} value={value} />;
+  return (
+    <Input
+      {...props}
+      className={className}
+      onChange={handleChange}
+      value={value}
+    />
+  );
 }

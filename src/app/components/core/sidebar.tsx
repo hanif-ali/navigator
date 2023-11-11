@@ -6,7 +6,7 @@ export async function SideBar() {
   return (
     <nav className="min-h-screen w-56 flex-none border-r px-2 pt-10">
       {documents.map((doc) => (
-        <div>
+        <div key={doc.id}>
           <Link href={`/documents/${doc.id}`}>{doc.name}</Link>
         </div>
       ))}

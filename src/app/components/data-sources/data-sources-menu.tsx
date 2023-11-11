@@ -13,7 +13,7 @@ export async function DataSourcesMenu() {
       data: {
         name: "Test Data Source",
         description: "Test Description",
-        type: "POSTGRES"
+        type: "POSTGRES",
       },
     });
     redirect(`/data-sources/${newDataSource.id}`);
@@ -34,7 +34,7 @@ export async function DataSourcesMenu() {
         </form>
       </div>
       {dataSources.map((ds) => (
-        <DataSourceNavItem dataSource={ds} />
+        <DataSourceNavItem dataSource={ds} key={ds.id} />
       ))}
     </div>
   );

@@ -34,7 +34,7 @@ export async function DocumentsMenu() {
         </form>
       </div>
       {documents.map((document) => (
-        <DocumentNavItem document={document} />
+        <DocumentNavItem document={document} key={document.id} />
       ))}
     </div>
   );

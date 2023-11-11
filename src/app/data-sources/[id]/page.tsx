@@ -11,8 +11,8 @@ export default async function DataSourcePage({ params }: Props) {
   const dataSource = await prisma.dataSource.findFirst({
     where: { id },
     include: {
-      postgresConfig: true
-    }
+      postgresConfig: true,
+    },
   });
   if (!dataSource) {
     return notFound();

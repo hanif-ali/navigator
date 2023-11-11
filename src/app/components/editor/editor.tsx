@@ -11,7 +11,7 @@ interface Props {
 
 export default function Editor(props: Props) {
   const { data, onChange } = props;
-	const holder = props.holder ?? "generate-random-id-here"
+  const holder = props.holder ?? "generate-random-id-here";
 
   const ref = useRef<EditorJS>();
 
@@ -25,8 +25,8 @@ export default function Editor(props: Props) {
           const data = await api.saver.save();
           onChange(data);
         },
-        defaultBlock: 'paragraph',
-        placeholder: 'begin writing...'
+        defaultBlock: "paragraph",
+        placeholder: "begin writing...",
       });
       ref.current = editor;
     }

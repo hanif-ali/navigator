@@ -1,6 +1,6 @@
-import Header from '@editorjs/header'
+import Header from "@editorjs/header";
 import Paragraph from "@editorjs/paragraph";
-import List from '@editorjs/list'
+import List from "@editorjs/list";
 
 export const EDITOR_TOOLS = {
   header: Header,

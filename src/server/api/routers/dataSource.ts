@@ -8,7 +8,7 @@ export const dataSourceRouter = createTRPCRouter({
       z.object({
         id: z.string(),
         name: z.string().optional(),
-        type: z.enum(['POSTGRES'])
+        type: z.enum(["POSTGRES"]),
       }),
     )
     .mutation(({ ctx, input }) => {

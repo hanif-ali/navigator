@@ -79,6 +79,7 @@
   }
 }
 
-.ce-toolbar__content, .ce-block__content{
+.ce-toolbar__content,
+.ce-block__content {
   max-width: 10000px;
 }

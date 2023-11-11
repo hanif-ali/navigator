@@ -33,7 +33,8 @@ export function DocumentNavItem(props: { document: Document }) {
         className="w-[80%] overflow-hidden overflow-ellipsis whitespace-nowrap"
         href={`/documents/${document.id}/`}
       >
-        <span className="mr-2">{document.icon}</span>{document.name}
+        <span className="mr-2">{document.icon}</span>
+        {document.name}
       </Link>
       <form
         className="hidden w-[20%] group-hover:inline-flex"

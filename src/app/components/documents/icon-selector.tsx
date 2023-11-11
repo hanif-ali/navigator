@@ -31,7 +31,7 @@ export function IconSelector(props: Props) {
         </div>
         <ScrollArea className="mt-6 h-[200px] w-full">
           <div className="grid grid-cols-8 gap-2">
-            {emojis.map((emoji) => (
+            {emojis.map((emoji, idx) => (
               <div
                 className={clsx(
                   "cursor-pointer rounded-md text-center hover:bg-slate-500",
@@ -40,6 +40,7 @@ export function IconSelector(props: Props) {
                   },
                 )}
                 onClick={() => onChange(emoji)}
+                key={idx}
               >
                 {emoji.emoji}
               </div>

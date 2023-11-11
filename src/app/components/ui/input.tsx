@@ -2,7 +2,10 @@ import * as React from "react";
 
 import { cn } from "src/lib/utils";
 
-export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
+export type InputProps = Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  "onChange"
+> & {
   onChange?: (value: string) => void;
 };
 

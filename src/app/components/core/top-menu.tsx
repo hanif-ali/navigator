@@ -1,5 +1,9 @@
 import Link from "next/link";
-import { IconNotes, IconSettings, IconTopologyStar3 } from "@tabler/icons-react";
+import {
+  IconNotes,
+  IconSettings,
+  IconTopologyStar3,
+} from "@tabler/icons-react";
 
 export function TopMenu() {
   return (

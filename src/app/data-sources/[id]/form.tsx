@@ -1,6 +1,5 @@
 "use client";
 
-import { DataSource, PostgresConfiguration, Prisma } from "@prisma/client";
 import { Button } from "~/app/components/ui/button";
 import {
   Card,
@@ -27,6 +26,10 @@ import { partial, partialRight } from "ramda";
 import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
 import { DataSourceWithConfiguration, dataSourceSchema } from "./utils";
+import { InputErrors } from "~/app/components/ui/inputerrors";
+import { DataSourceFormGeneralTab } from "./form/general";
+import { DataSourceFormConfigurationTab } from "./form/configuration";
+import { DataSourceFormConnectionTab } from "./form/connection";
 
 export function DataSourceForm(props: {
   dataSource: DataSourceWithConfiguration;
@@ -34,6 +37,7 @@ export function DataSourceForm(props: {
   const { dataSource } = props;
 
   const [data, setData] = useState(dataSource);
+  const [errors, setErrors] = useState<any>(null);
   const [formIsDirty, setFormIsDirty] = useState(false);
   const router = useRouter();
 
@@ -47,9 +51,11 @@ export function DataSourceForm(props: {
     setFormIsDirty(true);
   };
 
+  console.log(data);
+
   const onChangeConfiguration = (field: string, value: any) => {
     let config;
-    if (data.postgresConfig) {
+    if (!data.postgresConfig) {
       config = {
         [field]: value,
       };
@@ -64,25 +70,12 @@ export function DataSourceForm(props: {
   };
 
   const onSubmit = async (event: any, nextTab?: string) => {
-    dataSourceSchema.safeParse(data)?.errors?.errors?.reduce(
-      (errors, error) =>
-        error.path.reduce((a, b, level) => {
-          if (level === error.path.length - 1) {
-            a[b] = error.message;
-
-            return errors;
-          }
-
-          if (!a[b]) {
-            a[b] = {};
-          }
-
-          return a[b];
-        }, errors),
-      {} as { [key: string]: any },
-    );
-    const errors = dataSourceSchema.parse(data);
-    console.log(errors);
+    const result = dataSourceSchema.safeParse(data);
+    if (!result.success) {
+      console.log(result.error.format());
+      setErrors(result.error.format());
+      return;
+    }
     await mutateAsync(data);
     setFormIsDirty(false);
     if (nextTab) router.push(`/data-sources/${dataSource.id}/?tab=${nextTab}`);
@@ -92,154 +85,31 @@ export function DataSourceForm(props: {
     <Tabs defaultValue="general" className="mt-6">
       <TabsList className="grid w-full grid-cols-3">
         <TabsTrigger value="general">General</TabsTrigger>
-        <TabsTrigger value="connection">Connection</TabsTrigger>
-        <TabsTrigger value="advanced">Advanced</TabsTrigger>
+        <TabsTrigger value="configuration">Configuration</TabsTrigger>
+        <TabsTrigger value="connect">Connect</TabsTrigger>
       </TabsList>
       <TabsContent value="general">
-        <Card>
-          <CardHeader>
-            <CardTitle>General</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <div className="space-y-1">
-              <Label htmlFor="name">Name</Label>
-              <Input
-                id="name"
-                value={data.name}
-                onChange={partial(onChange, ["name"])}
-              />
-            </div>
-            <div className="space-y-1">
-              <Label htmlFor="username">Source Type</Label>
-              <div className="flex flex-wrap gap-4">
-                {DATA_SOURCES.map((d) => (
-                  <Button
-                    variant="ghost"
-                    className={cn("h-[70px] w-[70px]", {
-                      outline: data.type === d.type,
-                    })}
-                  >
-                    <Image
-                      src={d.imageLink}
-                      alt={d.name}
-                      width="50"
-                      height="50"
-                    />
-                  </Button>
-                ))}
-              </div>
-            </div>
-          </CardContent>
-          <CardFooter className="flex gap-2">
-            <Button
-              variant="secondary"
-              onClick={onSubmit}
-              disabled={!formIsDirty}
-            >
-              Save
-            </Button>
-            <Button
-              variant="default"
-              onClick={partialRight(onSubmit, ["connection"])}
-              disabled={!formIsDirty}
-            >
-              Save and Next
-            </Button>
-            {isLoading && <Loading />}
-          </CardFooter>
-        </Card>
+        <DataSourceFormGeneralTab
+          data={data}
+          onChange={onChange}
+          onSubmit={onSubmit}
+          errors={errors}
+          isLoading={isLoading}
+          formIsDirty={formIsDirty}
+        />
       </TabsContent>
-      <TabsContent value="connection">
-        <Card>
-          <CardHeader>
-            <CardTitle>Connection</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-8">
-            <div className="space-y-2">
-              <CardTitle>Server</CardTitle>
-              <CardDescription>
-                Specify how to connect to your data source
-              </CardDescription>
-              <div className="flex gap-2">
-                <div className="flex-1">
-                  <Label htmlFor="current">Host</Label>
-                  <Input
-                    type="text"
-                    onChange={partial(onChangeConfiguration, ["host"])}
-                  />
-                </div>
-                <div className="flex-1">
-                  <Label htmlFor="new">Port</Label>
-                  <Input type="number" />
-                </div>
-              </div>
-              <div>
-                <Label htmlFor="new">Database</Label>
-                <Input
-                  type="text"
-                  onChange={partial(onChangeConfiguration, ["database"])}
-                />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <CardTitle className="space-y-4">Authentication</CardTitle>
-              <div>
-                <Label htmlFor="new">Username</Label>
-                <Input type="text" />
-              </div>
-              <div>
-                <Label htmlFor="new">Password</Label>
-                <Input type="password" />
-              </div>
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Button
-              variant="secondary"
-              onClick={onSubmit}
-              disabled={!formIsDirty}
-            >
-              Save
-            </Button>
-            <Button
-              variant="default"
-              onClick={partialRight(onSubmit, ["connection"])}
-              disabled={!formIsDirty}
-            >
-              Save and Next
-            </Button>
-            {isLoading && <Loading />}
-          </CardFooter>
-        </Card>
+      <TabsContent value="configuration">
+        <DataSourceFormConfigurationTab
+          data={data}
+          onChange={onChangeConfiguration}
+          onSubmit={onSubmit}
+          errors={errors}
+          isLoading={isLoading}
+          formIsDirty={formIsDirty}
+        />
       </TabsContent>
-      <TabsContent value="advanced">
-        <Card>
-          <CardHeader>
-            <CardTitle>Advanced</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-8">
-            <div className="space-y-2">
-              <CardTitle>Server</CardTitle>
-              <CardDescription>
-                Specify how to connect to your data source
-              </CardDescription>
-              <div className="flex-1">
-                <Label htmlFor="current">Host</Label>
-                <Input type="text" />
-              </div>
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Button
-              variant="secondary"
-              onClick={onSubmit}
-              disabled={!formIsDirty}
-            >
-              Save
-            </Button>
-            {isLoading && <Loading />}
-          </CardFooter>
-        </Card>
+      <TabsContent value="connect">
+        <DataSourceFormConnectionTab data={data} />
       </TabsContent>
     </Tabs>
   );
