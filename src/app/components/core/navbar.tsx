@@ -12,7 +12,7 @@ import {
 
 export function NavBar() {
   return (
-    <header className="item-center fixed flex h-10 w-full border-b bg-background/90 px-4 backdrop-blur">
+    <header className="item-center fixed flex h-10 w-full border-b bg-background/50 z-10 px-4 backdrop-blur">
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
