@@ -3,6 +3,7 @@ import {
   IconNotes,
   IconSettings,
   IconTopologyStar3,
+  IconMicroscope,
 } from "@tabler/icons-react";
 
 export function TopMenu() {
@@ -15,6 +16,14 @@ export function TopMenu() {
       <Link className="my-4 text-white" href="/data-sources/">
         <IconTopologyStar3 />
         <span className="sr-only">Data Sources</span>
+      </Link>
+      <Link className="my-4 text-white" href="#">
+        <IconSettings />
+        <span className="sr-only">Settings</span>
+      </Link>
+      <Link className="my-4 text-white" href="/playground/">
+        <IconMicroscope />
+        <span className="sr-only">Playground</span>
       </Link>
       <Link className="my-4 text-white" href="#">
         <IconSettings />
