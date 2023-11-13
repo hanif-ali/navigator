@@ -9,7 +9,7 @@ export async function POST(req: Request) {
 
   return toStreamResponse(
 		<ChatCompletion>
-			<UserMessage>Write a poem about {topic}.</UserMessage>
+			<UserMessage>Write a 5 word sentence about {topic}.</UserMessage>
 		</ChatCompletion>
 	)
 }

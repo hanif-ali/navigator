@@ -46,15 +46,17 @@ model PostgresTable {
     id               String                @id @default(uuid())
     name             String
     alias            String
+    description      String
     postgresConfig   PostgresConfiguration @relation(fields: [postgresConfigId], references: [id])
     postgresConfigId String
     columns          PostgresColumn[]
 }
 
 model PostgresColumn {
-    id    String @id @default(uuid())
-    name  String
-    alias String
+    id          String @id @default(uuid())
+    name        String
+    alias       String
+    description String
 
     postgresTable   PostgresTable @relation(fields: [postgresTableId], references: [id])
     postgresTableId String

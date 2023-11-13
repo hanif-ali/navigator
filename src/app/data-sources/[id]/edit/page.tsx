@@ -1,10 +1,10 @@
 import { notFound } from "next/navigation";
 import { prisma } from "~/prisma";
+import { DataSourceForm } from "./form";
 
 interface Props {
   params: { id: string };
 }
-
 export default async function DataSourcePage({ params }: Props) {
   const { id } = params;
 
@@ -17,10 +17,11 @@ export default async function DataSourcePage({ params }: Props) {
   if (!dataSource) {
     return notFound();
   }
+
   return (
-    <div>
-      {dataSource.name}
-      <a href={`/data-sources/${dataSource.id}/edit/`}>Edit</a>
+    <div className="container mt-6">
+      <h1 className="text-xl font-bold">{dataSource.name}</h1>
+      <DataSourceForm dataSource={dataSource} />
     </div>
   );
 }
