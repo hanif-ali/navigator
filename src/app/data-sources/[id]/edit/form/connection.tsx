@@ -197,12 +197,6 @@ export const DataSourceFormConnectionTab = (props: Props) => {
                             </TableCell>
                           ))}
                         </TableRow>
-                        <tr>
-                          <td
-                            colSpan={columns.length}
-                            id={`columns-table-${row.index}`}
-                          ></td>
-                        </tr>
                       </>
                     ))
                   ) : (
